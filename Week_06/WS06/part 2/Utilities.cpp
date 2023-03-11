@@ -1,5 +1,7 @@
 #include "Utilities.h"
 #include "Employee.h"
+#include "Student.h"
+#include "Professor.h"
 #include <iostream>
 
 namespace sdds {
@@ -7,6 +9,14 @@ namespace sdds {
     Person* buildInstance(std::istream& in) {
         char tag {};
         in >> tag;
+
+        if (tag == 's' || tag == 'S') {
+            return new Student(in);
+        }
+
+        if (tag == 'p' || tag == 'P') {
+            return new Professor(in);
+        }
 
         if (tag == 'e' || tag == 'E') {
             return new Employee(in);

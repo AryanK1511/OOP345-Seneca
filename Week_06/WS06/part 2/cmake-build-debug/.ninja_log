@@ -1,0 +1,12 @@
+# ninja log v5
+1	520	1678556786338242999	CMakeFiles/part_2.dir/Professor.cpp.o	52e5edf8c3bf0d27
+1	523	1678556786341108139	CMakeFiles/part_2.dir/Employee.cpp.o	981a9dbbe131cef0
+1	537	1678556786355511546	CMakeFiles/part_2.dir/Utilities.cpp.o	dfb958ad1cc412a3
+0	551	1678556786369841122	CMakeFiles/part_2.dir/College.cpp.o	5406758441145fbc
+3	372	1678556978812210594	CMakeFiles/part_2.dir/Student.cpp.o	c9dff8f241f3bca0
+4	424	1678559930366572830	CMakeFiles/part_2.dir/Student.cpp.o	c9dff8f241f3bca0
+5	450	1678560148015044547	CMakeFiles/part_2.dir/Student.cpp.o	c9dff8f241f3bca0
+5	461	1678560148026712247	CMakeFiles/part_2.dir/Utilities.cpp.o	dfb958ad1cc412a3
+2	399	1678560349180232065	CMakeFiles/part_2.dir/College.cpp.o	5406758441145fbc
+3	429	1678560349211303720	CMakeFiles/part_2.dir/w6_p2.cpp.o	94f55af94750679a
+429	479	1678560349262219458	part_2	b29e4d226eefb96d

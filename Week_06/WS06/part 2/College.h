@@ -4,6 +4,7 @@
 #include "Person.h"
 #include <iostream>
 #include <vector>
+#include <list>
 
 namespace sdds {
     class College {
@@ -18,6 +19,15 @@ namespace sdds {
         College& operator +=(Person* thePerson);
         // Iterates over the persons stored in m_persons and prints their details
         void display(std::ostream& out = std::cout) const;
+        // A template function that iterates over the persons stored in the m_persons, and adds to the second parameter all persons for which the test is true
+        template <typename T>
+        void select(const T& src, std::list<const Person*>& persons) {
+            for (const auto& person : m_persons) {
+                if (src(person)) {
+                    persons.push_back(person);
+                }
+            }
+        }
     };
 }
 
