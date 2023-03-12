@@ -1,7 +1,0 @@
-p, Sara Joseph,44, E491910, Computer Science
-e, William Olver ,25, n456992 
-s, Sophia Aiden,se79, S902890
-s, Amelia Lucas, 20,S890321,  9,VxWorks, Java, C++, Nucleus,Threadx, TDA4VM, Delphi, Scala, R
-e, Jackson Benjamin,64, E789234
-s, Levi Owen   ,45, S217456,8, C#, Perl, Python, Tcl/TK, Symbian, DRA829, Matlab, Rust
-p, Mike John,103, E360537, Electrical Engineering
