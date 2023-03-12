@@ -5,12 +5,15 @@ using std::endl;
 
 namespace sdds {
     // Calls the constructor from Employee to build the sub-object
-    Professor::Professor(std::istream& in) : Employee(in) {}
+    Professor::Professor(std::istream& in) : Employee(in) {
+        m_department = Employee::m_dept;
+    }
 
     // Calls Employee::display() to print the information about the Employee, and adds department|"Professor" at the end
     void Professor::display(std::ostream& out) const {
         Employee::display(out);
-        out << " | Professor" << endl;
+        out << m_department;
+        out << "| Professor";
     }
 
     // A query that returns word Professor

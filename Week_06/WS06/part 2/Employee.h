@@ -11,6 +11,8 @@ namespace sdds {
         std::string m_age {};
         std::string m_id {};
     public:
+        // To store optional department
+        std::string m_dept {};
         Employee() = default;
         // Overloaded Constructor that loads data in the object
         Employee(std::istream& is);
