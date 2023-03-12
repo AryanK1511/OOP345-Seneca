@@ -1,0 +1,102 @@
+/*
+*****************************************************************************
+                              reflect.txt
+Full Name  : Aryan Khurana
+Student ID#: 145282216
+Email      : akhurana22@myseneca.ca
+Date of completion    : 12 March 2023
+I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+In this workshop, I learnt how to manage polymorphic objects using the vector container of the STL,  move a dynamically allocated object into a container, code a range-based iteration on the objects in a container and report and handle an exception.
+
+I faced a lot of problem in reading the remaining input stream for the professor. I managed to read the input stream for the employee but coudn’t figure out how to read the rest of it in a separate constructor as the file pointer kept on going to the next line. To fix this, I decided to create a public member attribute in the Employee class called m_dept which I later used to assign the department to the professor.
+// To store optional department
+std::string m_dept {};
+
+// Calls the constructor from Employee to build the sub-object
+Professor::Professor(std::istream& in) : Employee(in) {
+    m_department = Employee::m_dept;
+}
+
+In this workshop, I also learnt how to use dynamic casts to determine whether a class is something we want it to be at runtime. Dynamic cast returns a nullptr if it fails to convert the class to the required class. This helps us in validation checks.
+//  Create a lambda expression that receives as parameter `const sdds::Person*`
+//         and returns true if the person is student.
+auto students = [](const sdds::Person* person) {
+    return dynamic_cast<const sdds::Student*>(person) != nullptr;
+};;
+
+-	Why do you need to deallocate the dynamically allocated memory in your vector?
+The use of the vector container allowed us to store a collection of Person pointers in the member variable m_persons of our College class. This container automatically resizes itself to hold more or less pointers as needed (this is one of the features if the STL containers such as vectors), relieving us from the responsibility of manually allocating and deallocating memory for the pointers. We still have to allocate and deallocate memory for the dynamically created objects formed using the derived classes that inherit the Person interface that each of the pointers in the vector are pointing to.
+
+To ensure proper memory management, we implemented a College destructor that makes use of a constant iterator (to make sure that the address is not changed) to iterate through the vector of Person pointers. We can delete the memory pointed to by the pointer (*i), but the address remains the same.
+
+College::~College() {
+    for(auto i = m_persons.begin(); i != m_persons.end(); i++) {
+        delete *i;
+    }
+}
+
+-	When building an object from the input file, different things can go wrong: the record represents an unknown type of person, or record contains invalid data. How can the function loadData() detect what went wrong? Can you think at another solution than the one you have implemented?
+The function detects what is wrong by using the try catch block before actually executing the buildInstance function. Here it catch any errors thrown by the buildInstance function while doing its in built validation.
+try {
+    thePerson = sdds::buildInstance(file);
+    if (thePerson)
+        theCollege += thePerson;
+}
+catch (std::string msg) {
+    std::cout << msg << '\n';
+}
+
+However, the problem with this program is that the buildInstance never throws an error. It just returns nullptr. We could actually implement a functionality which helps in better handling of errors.
+// Previous Code
+Person* buildInstance(std::istream& in) {
+        char tag {};
+        in >> tag;
+
+        if (tag == 's' || tag == 'S') {
+            return new Student(in);
+        }
+
+        if (tag == 'p' || tag == 'P') {
+            return new Professor(in);
+        }
+
+        if (tag == 'e' || tag == 'E') {
+            return new Employee(in);
+        }
+
+        // Ignoring the rest of the string
+        in.ignore(1000, '\n');
+        return nullptr;
+}
+
+// Improved code
+Person* buildInstance(std::istream& in) {
+        char tag {};
+        in >> tag;
+
+        if (tag == 's' || tag == 'S') {
+            return new Student(in);
+        }
+
+        else if (tag == 'p' || tag == 'P') {
+            return new Professor(in);
+        }
+
+        else if (tag == 'e' || tag == 'E') {
+            return new Employee(in);
+        }
+
+        else {
+            throw "Error!";
+        }
+
+        // Ignoring the rest of the string
+        in.ignore(1000, '\n');
+        return nullptr;
+    }
+
+-	In this workshop you had to use std::list<sdds::Person*> and std::vector<sdds::Person*> to store a collection of persons as pointers. Could you have used std::list<sdds::Person> and std::vector<sdds::Person> instead? Justify your answer!
+-	We are not able to use std::list<sdds::Person> and std::vector<sdds::Person> instead because Person instances cannot be created because of it being an abstract base class. What we can do instead (as we have done in this workshop) is that we can instantiate instances of the classes that inherit the Person interface. This can be done if the derived class is a concrete class. If we make a separate container for each of the concrete classes, it would not make use of the dynamic type allocation and inheritance features that C++ provides.
