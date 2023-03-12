@@ -12,6 +12,7 @@ namespace sdds {
         std::vector<Person*> m_persons {};
     public:
         College() = default;
+        virtual ~College();
         // Disabling copy operations
         College(const College&) = delete;
         College& operator=(const College&) = delete;

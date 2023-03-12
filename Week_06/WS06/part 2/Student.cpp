@@ -92,11 +92,15 @@ namespace sdds {
     void Student::display(std::ostream& out) const {
         out << "| " << std::setw(10) << std::left << "Student"
             << "| " << std::setw(10) << std::left << m_id
-            << " | " << std::setw(20) << std::left << m_name
+            << "| " << std::setw(20) << std::left << m_name
             << " | " << std::setw(3) << std::left << m_age
             << " |" << m_courses[0];
             for (int i = 1; i < m_c; i++) {
                 out << ", " << m_courses[i];
             }
+    }
+
+    Student::~Student() {
+        delete[] m_courses;
     }
 }

@@ -12,9 +12,10 @@ namespace sdds {
         std::string m_id {};
         std::string* m_courses { nullptr };
         std::string m_count {};
-        size_t m_c {};
+        int m_c {};
     public:
         Student() = default;
+        ~Student();
         // Read a single record from the stream, extract all the information about a single student and store it in the attributes
         Student(std::istream& is);
         // Disabling Copy Operations

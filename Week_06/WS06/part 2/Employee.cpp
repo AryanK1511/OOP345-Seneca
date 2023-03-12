@@ -67,7 +67,7 @@ namespace sdds {
     void Employee::display(std::ostream& out) const {
         out << std::left;
         out << "| " << std::setw(10) << "Employee" << "| ";
-        out << std::setw(10) << m_id << " | ";
+        out << std::setw(10) << m_id << "| ";
         out << std::setw(20) << m_name << " | ";
         out << std::setw(3) << m_age << " |";
     }
