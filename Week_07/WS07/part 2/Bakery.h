@@ -14,6 +14,7 @@ I have done all the coding by myself and only copied the code that my professor 
 
 #include <iostream>
 #include <vector>
+#include <list>
 
 namespace sdds {
     enum class BakedType{
@@ -37,11 +38,17 @@ namespace sdds {
         Bakery(const char* filename);
         // Print the content of the collection into the parameter
         void showGoods(std::ostream& os = std::cout) const;
+        // Receives a parameter the name of the field used to sort the collection in ascending order
+        void sortBakery(std::string field);
+        // Combines the collection of BakedGoods from the current object and the parameter and returns the combined collection
+        std::vector<BakedGood> combine(const Bakery& bakery);
+        // Returns true if the collection contains Stock of a BakedGood
+        bool inStock(const std::string desc, const BakedType& bt) const;
+        // Returns the list of all out of stock items in the collection
+        std::list<BakedGood> outOfStock(BakedType bt) const;
     };
-
     // Inserts one BakedGood into the first parameter
     std::ostream& operator<<(std::ostream& out, const BakedGood& b);
-
     // Strips all the white spaces from a string
     std::string strip(const std::string& str);
 }

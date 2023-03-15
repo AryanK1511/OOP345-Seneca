@@ -13,7 +13,8 @@ I have done all the coding by myself and only copied the code that my professor 
 #include <iostream>
 #include <iomanip>
 #include <fstream>
-#include <cstring>
+#include <algorithm>
+#include <numeric>
 using std::endl;
 
 namespace sdds {
@@ -32,7 +33,6 @@ namespace sdds {
             // Using the transform algorithm to convert baked type string to uppercase to avoid errors while validating
             std::string bakedType = data.substr(0, 8);
             transform(bakedType.begin(), bakedType.end(), bakedType.begin(), ::toupper);
-
             // Assigning data
             bakedGood.m_bakedType = strip(bakedType) == "BREAD" ? BakedType::BREAD : BakedType::PASTERY;
             bakedGood.m_description = strip(data.substr(8, 20));
@@ -48,7 +48,59 @@ namespace sdds {
 
     // Print the content of the collection into the parameter
     void Bakery::showGoods(std::ostream& os) const {
-        for_each(m_collection.begin(), m_collection.end(), [&os](auto bakedGood) { os << bakedGood; });
+        // Printing all the collection content by looping over all the entries
+        for_each(m_collection.begin(), m_collection.end(), [&os](auto bakedGood) { os << bakedGood << endl; });
+        // Calculating total stock amount and price using numeric functions
+        auto total_stock = std::accumulate(m_collection.begin(), m_collection.end(), 0, [](int acc, const BakedGood& good) { return acc + good.m_stockAmount; });
+        auto total_price = std::accumulate(m_collection.begin(), m_collection.end(), 0.00, [](double acc, const BakedGood& good) { return acc + good.m_price; });
+        // Printing the total price and stock amount
+        os << "Total Stock: " << total_stock << endl;
+        os << "Total Price: " << std::fixed << std::setprecision(2) << total_price << endl;
+    }
+
+    // Receives a parameter the name of the field used to sort the collection in ascending order
+    void Bakery::sortBakery(std::string field) {
+        // Using the transform algorithm to convert field string to uppercase to avoid errors while validating
+        transform(field.begin(), field.end(), field.begin(), ::toupper);
+        // Sorting the collection
+        std::sort(m_collection.begin(), m_collection.end(), [field](const BakedGood& bakedGood1, const BakedGood& bakedGood2) {
+            bool returnVal {};
+            (field == "DESCRIPTION") ? returnVal = bakedGood1. m_description < bakedGood2.m_description : returnVal;
+            (field == "SHELF") ? returnVal = bakedGood1. m_shelfLife < bakedGood2.m_shelfLife : returnVal;
+            (field == "STOCK") ? returnVal = bakedGood1. m_stockAmount < bakedGood2.m_stockAmount : returnVal;
+            (field == "PRICE") ? returnVal = bakedGood1. m_price < bakedGood2.m_price : returnVal;
+            return returnVal;
+        });
+    }
+
+    // Combines the collection of BakedGoods from the current object and the parameter and returns the combined collection
+    std::vector<BakedGood> Bakery::combine(const Bakery& bakery) {
+        std::vector<BakedGood> combined;
+        // Merging
+        std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), std::back_inserter(combined), [](const BakedGood& bg1, const BakedGood& bg2) {
+            return bg1.m_price < bg2.m_price;
+        });
+        return combined;
+    }
+
+    // Returns true if the collection contains Stock of a BakedGood
+    bool Bakery::inStock(const std::string desc, const BakedType& bt) const {
+        return std::any_of(m_collection.begin(), m_collection.end(), [desc, bt](const BakedGood& bg) {
+            return bg.m_description == desc && bg.m_bakedType == bt;
+        });
+    }
+
+    // Returns the list of all out of stock items in the collection
+    std::list<BakedGood> Bakery::outOfStock(BakedType bt) const {
+        std::list<BakedGood> outOfStockItems;
+        std::copy_if(m_collection.begin(), m_collection.end(), std::back_inserter(outOfStockItems),[bt](const BakedGood& bg) {
+            return bg.m_bakedType == bt && bg.m_stockAmount == 0;
+        });
+        // Sort the list of out-of-stock items by price
+        outOfStockItems.sort([](const BakedGood& bg1, const BakedGood& bg2) {
+            return bg1.m_price < bg2.m_price;
+        });
+        return outOfStockItems;
     }
 
     // Inserts one BakedGood into the first parameter
@@ -58,7 +110,7 @@ namespace sdds {
         out << " * " << std::left << std::setw(5) << b.m_shelfLife;
         out << " * " << std::left << std::setw(5) << b.m_stockAmount;
         out << " * " << std::right << std::fixed << std::setprecision(2) << std::setw(8) << b.m_price;
-        out << " *" << endl;
+        out << " *";
         return out;
     }
 
