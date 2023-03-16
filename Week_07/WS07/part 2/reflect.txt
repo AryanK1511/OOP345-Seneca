@@ -8,3 +8,115 @@ Date of completion    : 16 March 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 *****************************************************************************
 */
+Through this workshop, I learnt a couple of things.
+1) Copy data from a file into a sequential container
+- In order to solve this, I  
+2) Use the numeric library to accumulate data values
+- I used algorithms like accumulate from the numeric library.
+3) Use a lambda expression to specify an operation on each value in a data set
+- I used various lambda expressions in this program in every single algorithm to get the results that I desired. I also fetched copied of variables from outside the function. The only exception is the output stream that I used a refernce for.
+4) Use the algorithm library to sort data values
+- I used the sort function with a combination of lambda function to sort by different fields.
+
+The main problem that I faced was in the combine function because we were supposed to pass a refernce to the class that was not constant. However, I passed a const reference to the function which in turn made the reference unmodifiable and I coulnt make changes to it as a result. I also didn’t sort the vectors before merging. Last problem was that I hadn’t specified a size for the vector.
+Erroneous Code:
+std::vector<BakedGood> Bakery::combine(const Bakery& bakery) {
+    std::vector<BakedGood> combined;
+    // Merging
+    std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), combined.begin(), [](const BakedGood& bg1, const BakedGood& bg2) {
+        return bg1.m_price < bg2.m_price;
+    });
+    return combined;
+}
+
+Corrected Code:
+std::vector<BakedGood> Bakery::combine(Bakery& bakery) {
+    std::vector<BakedGood> combined(m_collection.size() + bakery.m_collection.size());
+    // Sorting both the vectors
+    sortBakery("Price");
+    bakery.sortBakery("Price");
+    // Merging
+    std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), combined.begin(), [](const BakedGood& bg1, const BakedGood& bg2) {
+        return bg1.m_price < bg2.m_price;
+    });
+    return combined;
+}
+
+- List all the STL functions that you have used in this workshop; explain your reasoning for choosing each one, and not another.
+1) std::for_each
+This is used to iterate over every single element inside the collection containing bakedGoods and performing an operation on each one of them. In this case we print every single element.
+Example)
+std::for_each(m_collection.begin(), m_collection.end(), [&os](auto bakedGood) { os << bakedGood << endl; });
+
+2) std::accumulate
+This accumulates the values in the range specified. In this case, we use the algorithm to calculate the total stock and price of the goods.
+Example)
+auto total_stock = std::accumulate(m_collection.begin(), m_collection.end(), 0, [](int acc, const BakedGood& good) { return acc + good.m_stockAmount; });
+
+auto total_price = std::accumulate(m_collection.begin(), m_collection.end(), 0.00, [](double acc, const BakedGood& good) { return acc + good.m_price; });
+
+3) std::transform
+I used this function to convert all of the bakery item types to uppercase. I did this so that I could o comparision later on without running into bugs.
+Example)
+std::transform(field.begin(), field.end(), field.begin(), ::toupper);
+
+4) std::sort
+I used this to sort the collection of baked goods on the basis of whatever field that the user enters.
+Example)
+std::sort(m_collection.begin(), m_collection.end(), [field](const BakedGood& bakedGood1, const BakedGood& bakedGood2) {
+    bool returnVal {};
+    (field == "DESCRIPTION") ? returnVal = bakedGood1. m_description < bakedGood2.m_description : returnVal;
+    (field == "SHELF") ? returnVal = bakedGood1. m_shelfLife < bakedGood2.m_shelfLife : returnVal;
+    (field == "STOCK") ? returnVal = bakedGood1. m_stockAmount < bakedGood2.m_stockAmount : returnVal;
+    (field == "PRICE") ? returnVal = bakedGood1. m_price < bakedGood2.m_price : returnVal;
+    return returnVal;
+});
+
+5) std::merge
+I used this to merge two vectors and sort them using the price.
+Example)
+std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), combined.begin(), [](const BakedGood& bg1, const BakedGood& bg2) {
+    return bg1.m_price < bg2.m_price;
+});
+
+6) std::any_of
+I needed to return true if the collection contains Stock of that BakedGood. The any_of function returns true if any element within the range provided satisfied the predicate that we specified.
+Example)
+return std::any_of(m_collection.begin(), m_collection.end(), [desc, bt](const BakedGood& bg) {
+    return bg.m_description == desc && bg.m_bakedType == bt;
+});
+
+7) std::copy_if
+I use this function to create a list of all the out of stock items in the collection. In my opinion, copy_if was the best choice as it was the shortest of all.
+Example)
+std::copy_if(m_collection.begin(), m_collection.end(), std::back_inserter(outOfStockItems),[bt](const BakedGood& bg) {
+    return bg.m_bakedType == bt && bg.m_stockAmount == 0;
+});
+
+- Present the advantages of using STL algorithms vs. implementing the functionality by yourself using loops.
+1) The program becomes shorter and syntactically easier to read.
+2) They have efficient algorithms that they use underneath the hood, which makes the program faster in comparison to what it would be if we use plain loops.
+3) They are less error prone. The algorithms are thoroughly tested and debugged and they are used extensively in production code.
+4) If we write code by ourselves we will have to think about the whole logic ourselves and we might make some logical errors which is not the case when we use STL algorithms where all the logical complexity is abstracted to make life easier.
+
+- For the sortBakery function, would anything differ in how it is implemented if the choice of collection was either a vector or a list? If there is a difference what is it?
+If we decide to use a list instead of a vector, the code would look something like this.
+Example)
+std::list<BakedGood> Bakery::combine(Bakery& bakery) {
+    std::vector<BakedGood> combined; // No size needed if you need a list
+    // Sorting both the vectors
+    sortBakery("Price");
+    bakery.sortBakery("Price");
+
+    // Merging
+    std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(),
+                std::back_inserter(combined), [](const BakedGood& bg1, const BakedGood& bg2) { // We use backinserter when we use lists
+        return bg1.m_price < bg2.m_price;
+    });
+    return combined;
+}
+
+You can also use the std::sort() method with an std::list to sort it.
+std::sort with list only requires a lambda function and not in the normal way.
+m_collection.sort();
+We call a method on the list that taken in a predicate so that it knows how to sort our list.

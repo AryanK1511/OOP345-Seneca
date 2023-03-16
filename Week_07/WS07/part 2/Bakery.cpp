@@ -49,7 +49,7 @@ namespace sdds {
     // Print the content of the collection into the parameter
     void Bakery::showGoods(std::ostream& os) const {
         // Printing all the collection content by looping over all the entries
-        for_each(m_collection.begin(), m_collection.end(), [&os](auto bakedGood) { os << bakedGood << endl; });
+        std::for_each(m_collection.begin(), m_collection.end(), [&os](auto bakedGood) { os << bakedGood << endl; });
         // Calculating total stock amount and price using numeric functions
         auto total_stock = std::accumulate(m_collection.begin(), m_collection.end(), 0, [](int acc, const BakedGood& good) { return acc + good.m_stockAmount; });
         auto total_price = std::accumulate(m_collection.begin(), m_collection.end(), 0.00, [](double acc, const BakedGood& good) { return acc + good.m_price; });
@@ -61,7 +61,7 @@ namespace sdds {
     // Receives a parameter the name of the field used to sort the collection in ascending order
     void Bakery::sortBakery(std::string field) {
         // Using the transform algorithm to convert field string to uppercase to avoid errors while validating
-        transform(field.begin(), field.end(), field.begin(), ::toupper);
+        std::transform(field.begin(), field.end(), field.begin(), ::toupper);
         // Sorting the collection
         std::sort(m_collection.begin(), m_collection.end(), [field](const BakedGood& bakedGood1, const BakedGood& bakedGood2) {
             bool returnVal {};
@@ -74,10 +74,14 @@ namespace sdds {
     }
 
     // Combines the collection of BakedGoods from the current object and the parameter and returns the combined collection
-    std::vector<BakedGood> Bakery::combine(const Bakery& bakery) {
-        std::vector<BakedGood> combined;
+    std::vector<BakedGood> Bakery::combine(Bakery& bakery) {
+        std::vector<BakedGood> combined(m_collection.size() + bakery.m_collection.size());
+        // Sorting both the vectors
+        sortBakery("Price");
+        bakery.sortBakery("Price");
+
         // Merging
-        std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), std::back_inserter(combined), [](const BakedGood& bg1, const BakedGood& bg2) {
+        std::merge(m_collection.begin(), m_collection.end(), bakery.m_collection.begin(), bakery.m_collection.end(), combined.begin(), [](const BakedGood& bg1, const BakedGood& bg2) {
             return bg1.m_price < bg2.m_price;
         });
         return combined;
@@ -110,7 +114,7 @@ namespace sdds {
         out << " * " << std::left << std::setw(5) << b.m_shelfLife;
         out << " * " << std::left << std::setw(5) << b.m_stockAmount;
         out << " * " << std::right << std::fixed << std::setprecision(2) << std::setw(8) << b.m_price;
-        out << " *";
+        out << " * ";
         return out;
     }
 

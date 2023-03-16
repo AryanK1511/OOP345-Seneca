@@ -41,7 +41,7 @@ namespace sdds {
         // Receives a parameter the name of the field used to sort the collection in ascending order
         void sortBakery(std::string field);
         // Combines the collection of BakedGoods from the current object and the parameter and returns the combined collection
-        std::vector<BakedGood> combine(const Bakery& bakery);
+        std::vector<BakedGood> combine(Bakery& bakery);
         // Returns true if the collection contains Stock of a BakedGood
         bool inStock(const std::string desc, const BakedType& bt) const;
         // Returns the list of all out of stock items in the collection
