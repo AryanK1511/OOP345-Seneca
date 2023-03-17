@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 08 March 2023
+// Date of completion: 17 March 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -18,25 +18,36 @@ namespace sdds {
 
     // Extracts a token from string str referred to by the first parameter.
     std::string Utilities::extractToken(const std::string& str, size_t& next_pos, bool& more) {
-        size_t end_pos = str.find(m_delimiter, next_pos);
-        std::string tokenExtracted {};
-
-        tokenExtracted.erase(0, tokenExtracted.find_first_not_of((" \t\r\n")));
-        tokenExtracted.erase(0, tokenExtracted.find_last_not_of((" \t\r\n")) + 1);
-
-        if (end_pos != std::string::npos) {
-            tokenExtracted = str.substr(next_pos, end_pos - next_pos);
-            next_pos = end_pos + 1;
+        std::string extractedToken {};
+        size_t endPos = str.find(m_delimiter, next_pos);
+        if (endPos != std::string::npos) {
+            extractedToken = str.substr(next_pos, endPos - next_pos);
+            next_pos = endPos + 1;
             more = true;
-        } else {
-            tokenExtracted = str.substr(next_pos);
-            next_pos = str.length();
+        }
+        else {
+            extractedToken = str.substr(next_pos);
             more = false;
         }
-        (tokenExtracted.length() > m_widthField) ? m_widthField = tokenExtracted.length() : m_widthField;
-        if (tokenExtracted.empty()) { throw "ERROR: Token is empty!"; }
+        // Strip all white spaces from the token
+        extractedToken = strip(extractedToken);
+        // Updating field width
+        (extractedToken.length() > m_widthField) ? m_widthField = extractedToken.length() : m_widthField;
+        // Throw an error if no token was extracted
+        if (extractedToken.empty()) {
+            more = false;
+            throw "ERROR: Token is empty!";
+        }
+        return extractedToken;
+    }
 
-        return tokenExtracted;
+    // Strips all the white spaces from a string
+    std::string Utilities::strip(const std::string& str) {
+        std::string returnVal {};
+        size_t first = str.find_first_not_of(' ');
+        size_t last = str.find_last_not_of(' ');
+        (std::string::npos == first) ? returnVal = str : returnVal = str.substr(first, (last - first + 1));
+        return returnVal;
     }
 
     // Sets the delimiter for this class to the character received

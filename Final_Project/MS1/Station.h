@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 08 March 2023
+// Date of completion: 17 March 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -17,9 +17,9 @@ namespace sdds {
         size_t m_id {};
         std::string m_item {};
         std::string m_description {};
-        size_t m_next {};
+        size_t m_serial {};
         size_t m_quantity { 0 };
-        inline static size_t m_widthField { 1 };
+        inline static size_t m_widthField { 0 };
         inline static size_t id_generator { 0 };
     public:
         Station() = default;
