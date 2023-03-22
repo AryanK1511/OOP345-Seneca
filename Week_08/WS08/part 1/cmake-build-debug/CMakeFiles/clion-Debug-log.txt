@@ -1,4 +1,4 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1" -B "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug"
+/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/Applications/CLion.app/Contents/bin/ninja/mac/ninja -G Ninja -S "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1" -B "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug"
 -- The C compiler identification is AppleClang 14.0.0.14000029
 -- The CXX compiler identification is AppleClang 14.0.0.14000029
 -- Detecting C compiler ABI info
@@ -13,4 +13,4 @@
 -- Detecting CXX compile features - done
 -- Configuring done
 -- Generating done
--- Build files have been written to: /Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug
+-- Build files have been written to: /Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug

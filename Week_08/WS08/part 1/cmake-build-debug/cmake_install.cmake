@@ -1,4 +1,4 @@
-# Install script for directory: /Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1
+# Install script for directory: /Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

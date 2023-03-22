@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug"
+			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -479,7 +479,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug/CMakeFiles/pkgRedirects"
+			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -539,7 +539,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1"
+			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1"
 		},
 		{
 			"name" : "CMAKE_INSTALL_NAME_TOOL",
@@ -1111,7 +1111,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1/cmake-build-debug"
+			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1/cmake-build-debug"
 		},
 		{
 			"name" : "part_1_IS_TOP_LEVEL",
@@ -1135,7 +1135,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_09/WS08/part 1"
+			"value" : "/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Week_08/WS08/part 1"
 		}
 	],
 	"kind" : "cache",
