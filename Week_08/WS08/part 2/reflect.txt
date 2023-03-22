@@ -1,0 +1,94 @@
+/*
+*****************************************************************************
+                              reflect.txt
+Full Name  : Aryan Khurana
+Student ID#: 145282216
+Email      : akhurana22@myseneca.ca
+Date of completion    : 22 March 2023
+I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
+*****************************************************************************
+*/
+
+In this workshop, I learn how to use smart pointers and also revised some of my file handling concepts. We use smart pointers over raw pointers because they handle the deallocation of the memory automatically without having to wrap everything in try catch blocks like what we would have to do if we would’ve used raw pointers.
+
+The main problem that I faced in this workshop was basically understanding how to implement the encrypt and decrypt functions. The specialization for string was pretty straightforward as we had to iterate through every single character in a string and operate between characters. However, the long long specialization was a bit different. Instead of single characters we used single bytes by converting the long long reference into a stream of bytes by using the reinterpret cast. We use the bitwise XOR operator for encryption and decryption.
+
+// Specialized Encryption/Decryption functions
+template<>
+void Database<std::string>::encryptDecrypt(std::string& value) {
+    const char secret[]{ "secret encryption key" };
+    for (char& c : value) {
+        for (const char& k : secret) {
+            c = c ^ k;
+        }
+    }
+}
+
+template<>
+void Database<long long>::encryptDecrypt(long long& value) {
+    const char secret[]{ "super secret encryption key" };
+    char* bytes = reinterpret_cast<char*>(&value);
+    size_t numBytes = sizeof(value);
+    for (size_t i = 0; i < numBytes; i++) {
+        for (const char& k : secret) {
+            bytes[i] = bytes[i] ^ k;
+        }
+    }
+}
+
+- Why could we not use a unique_ptr in your Database class?
+We cannot use a unique_ptr here instead of a shared_ptr because a unique_ptr implies unique ownership of the object. If a unique_ptr was used, it would not be possible to share the Database instance between different parts of the code. 
+Database Instance: inline static std::shared_ptr<Database> m_database {};
+The instance is static and is therefore shared between every instance created by the Database class. The intent behind the code is to allow multiple parts of the code to access the same instance.
+
+- What changes you had to make in part 1 to transform the class into a templated one?
+In order to change the Database class to a templated class, everything had to be moved to the header file first. After this step, we had to use "template <typename T>" before the class to show that it is a templated class.
+Furthermore, we also had to implement the encryption and Decryption function which can be used with all the types and is specialized for strings and long long. To do this we create the following two functions outside the class definition.
+// Specialized Encryption/Decryption functions
+template<>
+void Database<std::string>::encryptDecrypt(std::string& value) {
+    const char secret[]{ "secret encryption key" };
+    for (char& c : value) {
+        for (const char& k : secret) {
+            c = c ^ k;
+        }
+    }
+}
+
+template<>
+void Database<long long>::encryptDecrypt(long long& value) {
+    const char secret[]{ "super secret encryption key" };
+    char* bytes = reinterpret_cast<char*>(&value);
+    size_t numBytes = sizeof(value);
+    for (size_t i = 0; i < numBytes; i++) {
+        for (const char& k : secret) {
+            bytes[i] = bytes[i] ^ k;
+        }
+    }
+}
+We also had to implement the base function in the private members of the Database class.
+// Encrypt and Decrypt Function
+void encryptDecrypt(T& value) {};
+
+After this step, we had to change the type of value and value array from std::string to the templated type 'T'.
+T m_values[max_entries] {};
+Err_Status GetValue(const std::string& key, T& value);
+Err_Status SetValue(const std::string& key, const T& value);
+
+- A class that allows only one instance to be created is called a singleton. Can you think at another way to create a singleton without using static members? How would that object be managed?
+Yes, there is another way of implementing a singleton without static.
+We can convert the Database class to an anonymous class. This way there will only be a single instance of the class.
+class {
+    // code
+} instanceName;
+
+- The class Database has a resource attribute (the database instance), yet no copy/move operations were implemented. Is that a bug (justify your answer)?
+In my opinion, we should probably delete all copy operations and move operations. This is because, if we have the ability to create copies and move objects, that would defeat the idea of the class being a singleton. It would result in multiple instances of the class being created which is not something we desire.
+
+- We said that the class Database can be instantiated only once, yet in the output we see that the custom constructor is called twice (same for the destructor). Explain.
+This is because in the main file, we have the following code.
+void* db1 = sdds::Database<std::string>::getInstance(argv[1]).get();
+void* db2 = sdds::Database<long long>::getInstance(argv[2]).get();
+void* db3 = sdds::Database<std::string>::getInstance("nothing").get();
+void* db4 = sdds::Database<long long>::getInstance("nothing").get();
+If this class were not a singleton, there should’ve been 4 constructors and 4 destructors but there are only two. The 2 constructors and destructors are there because we are using a templated class and Database<std::string> objects as well as Database<long long> objects are objects instantiated from different classes. This is the reason that we have two constructors and destructors instead of four of them.

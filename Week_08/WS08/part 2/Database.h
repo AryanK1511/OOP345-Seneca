@@ -4,7 +4,7 @@
 Full Name  : Aryan Khurana
 Student ID#: 145282216
 Email      : akhurana22@myseneca.ca
-Date of completion    : 21 March 2023
+Date of completion    : 22 March 2023
 I have done all the coding by myself and only copied the code that my professor provided to complete my workshops and assignments.
 *****************************************************************************
 */
@@ -38,6 +38,7 @@ namespace sdds {
         T m_values[max_entries] {};
         std::string m_filename;
 
+        // Private Constructor
         Database(const std::string& filename) {
             m_filename = filename;
             m_entries = 0;
