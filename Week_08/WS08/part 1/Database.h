@@ -29,10 +29,10 @@ namespace sdds {
     class Database {
     private:
         inline static std::shared_ptr<Database> m_database {};
-        size_t m_entries {};
+        size_t m_entries;
         std::string m_keys[20] {};
         std::string m_values[20] {};
-        std::string m_filename {};
+        std::string m_filename;
         Database(const std::string& filename);
         // Strips all the not required characters from a string
         std::string strip(const std::string& str);

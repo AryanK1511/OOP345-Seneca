@@ -12,10 +12,13 @@ I have done all the coding by myself and only copied the code that my professor 
 #include "Database.h"
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 namespace sdds {
     // Private Constructor
-    Database::Database(const std::string& filename) : m_filename(filename), m_entries(0) {
+    Database::Database(const std::string& filename) {
+        m_filename = filename ;
+        m_entries = 0 ;
         std::cout << "[" << this << "]" << " Database(const std::string&)" << std::endl;
         std::ifstream file(filename);
             std::string key {}, value {};
