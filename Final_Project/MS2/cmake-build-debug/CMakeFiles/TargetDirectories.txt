@@ -1,3 +1,0 @@
-/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Final_Project/MS2/cmake-build-debug/CMakeFiles/MS2.dir
-/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Final_Project/MS2/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/aryan-khurana/Desktop/Seneca-college-OOP345-Workshops-and-Labs/Final_Project/MS2/cmake-build-debug/CMakeFiles/rebuild_cache.dir
