@@ -33,8 +33,8 @@ namespace sdds {
         CustomerOrder() = default;
         // Overloaded Constructor - Extract the tokens from the string and populate the current instance
         CustomerOrder(const std::string& str);
-        // Disabling Copy Operations
-        CustomerOrder(const CustomerOrder&) = delete;
+        // Copy Operations
+        CustomerOrder(const CustomerOrder&);
         CustomerOrder& operator=(const CustomerOrder&) = delete;
         // Move Semantics
         CustomerOrder(CustomerOrder&& co) noexcept;
@@ -48,7 +48,7 @@ namespace sdds {
         // This modifier fills one item in the current order that the Station specified in the first parameter handles
         void fillItem(Station& station, std::ostream& os);
         // Displays the state of the current object
-        void display(std::ostream& os) const;
+        void display(std::ostream& os = std::cout) const;
     };
 }
 
