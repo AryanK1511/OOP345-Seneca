@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 25 March 2023
+// Date of completion: 30 March 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -17,11 +17,11 @@
 namespace sdds {
     // ========== GLOBAL VARIABLES ===========
     // Holds the orders to be placed onto the assembly line at the first station.
-    extern std::deque<CustomerOrder> g_pending {};
+    extern std::deque<CustomerOrder> g_pending;
     // Holds the orders that have been removed from the last station and have been completely filled.
-    extern std::deque<CustomerOrder> g_completed {};
+    extern std::deque<CustomerOrder> g_completed;
     // Holds the orders that have been removed from the last station and could not be filled completely.
-    extern std::deque<CustomerOrder> g_incomplete {};
+    extern std::deque<CustomerOrder> g_incomplete;
 
     class Workstation : public Station {
     private:
