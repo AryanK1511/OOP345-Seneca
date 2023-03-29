@@ -17,11 +17,11 @@
 namespace sdds {
     // ========== GLOBAL VARIABLES ===========
     // Holds the orders to be placed onto the assembly line at the first station.
-    std::deque<CustomerOrder> g_pending {};
+    extern std::deque<CustomerOrder> g_pending {};
     // Holds the orders that have been removed from the last station and have been completely filled.
-    std::deque<CustomerOrder> g_completed {};
+    extern std::deque<CustomerOrder> g_completed {};
     // Holds the orders that have been removed from the last station and could not be filled completely.
-    std::deque<CustomerOrder> g_incomplete {};
+    extern std::deque<CustomerOrder> g_incomplete {};
 
     class Workstation : public Station {
     private:
@@ -42,7 +42,7 @@ namespace sdds {
         // Attempts to move the order at the front of the queue to the next station
         bool attemptToMoveOrder();
         // Stores the address of the referenced Workstation object in the pointer to the m_pNextStation
-        void setNextStation(Workstation* station);
+        void setNextStation(Workstation* station = nullptr);
         // This query returns the address of next Workstation
         Workstation* getNextStation() const;
         // This query inserts the name of the Item for which the current object is responsible into stream os
