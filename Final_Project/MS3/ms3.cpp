@@ -112,30 +112,30 @@ int main(int argc, char** argv)
 		return 2;
 	}
 
-	cout << "========================================" << endl;
-	cout << "=      Processed Orders (complete)     =" << endl;
-	cout << "========================================" << endl;
-	for (const auto& o : g_completed)
-		o.display(cout);
-	cout << endl << endl;
-
-	cout << "========================================" << endl;
-	cout << "=     Processed Orders (incomplete)    =" << endl;
-	cout << "========================================" << endl;
-	for (const auto& o : g_incomplete)
-		o.display(cout);
-	cout << endl << endl;
-
-	cout << "========================================" << endl;
-	cout << "=          Inventory (full)            =" << endl;
-	cout << "========================================" << endl;
-	for (const Station* theItem : theStations)
-		theItem->display(cout, true);
-	cout << endl;
-
-	// cleanup
-	for (auto station : theStations)
-		delete station;
+//	cout << "========================================" << endl;
+//	cout << "=      Processed Orders (complete)     =" << endl;
+//	cout << "========================================" << endl;
+//	for (const auto& o : g_completed)
+//		o.display(cout);
+//	cout << endl << endl;
+//
+//	cout << "========================================" << endl;
+//	cout << "=     Processed Orders (incomplete)    =" << endl;
+//	cout << "========================================" << endl;
+//	for (const auto& o : g_incomplete)
+//		o.display(cout);
+//	cout << endl << endl;
+//
+//	cout << "========================================" << endl;
+//	cout << "=          Inventory (full)            =" << endl;
+//	cout << "========================================" << endl;
+//	for (const Station* theItem : theStations)
+//		theItem->display(cout, true);
+//	cout << endl;
+//
+//	// cleanup
+//	for (auto station : theStations)
+//		delete station;
 
 	return 0;
 }

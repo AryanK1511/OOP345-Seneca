@@ -10,6 +10,14 @@
 #include <iostream>
 
 namespace sdds {
+    // ========== GLOBAL VARIABLES ===========
+    // Holds the orders to be placed onto the assembly line at the first station.
+    std::deque<CustomerOrder> g_pending;
+    // Holds the orders that have been removed from the last station and have been completely filled.
+    std::deque<CustomerOrder> g_completed;
+    // Holds the orders that have been removed from the last station and could not be filled completely.
+    std::deque<CustomerOrder> g_incomplete;
+
     // Receives a reference to an unmodifiable reference to std::string and passes it to the Station base class
     Workstation::Workstation(const std::string& str) : Station(str) {}
 
