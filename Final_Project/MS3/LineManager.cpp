@@ -26,6 +26,10 @@ namespace sdds {
         size_t next_copy = next_pos;
         bool more { true };
 
+        // Designing vectors to determine the first station later in the code
+        std::vector<std::string> leftStations;
+        std::vector<std::string> rightStations;
+
         // ===== DESIGN TO FIGURE OUT THE FIRST ELEMENT =====
         while (std::getline(infile, str)) {
             // Resetting the index
@@ -36,6 +40,10 @@ namespace sdds {
             // This is to prevent the program from extracting twice if there is no delimiter and checking if there is a next station that exists
             if (!(next_pos == next_copy)) {
                 tempNextStation = utils.extractToken(str, next_pos, more);
+
+                // Adding the stations to our vectors
+                leftStations.push_back(tempCurrStation);
+                rightStations.push_back(tempNextStation);
             }
             // Finding the current station in the collection
             auto currStation = std::find_if(stations.begin(), stations.end(), [&](Workstation* station){
@@ -54,14 +62,28 @@ namespace sdds {
             }
         }
 
-        // Setting the first station
-//        auto firstStation = std::find_if(stations.begin(), stations.end(), [](Workstation* station){
-//            return station->getNextStation() == nullptr;
-//        });
-        auto firstStation = std::find_if(stations.begin(), stations.end(), [](Workstation* station){
-            return station->getItemName() == "Bed";
+        // Algorithm to determine the first station
+        size_t count {};
+        std::string fStn {};
+        for (const auto & leftStation : leftStations) {
+            count = 0;
+            for (const auto & rightStation : rightStations) {
+                if (leftStation == rightStation) {
+                    count++;
+                }
+            }
+            if (count == 0) {
+                fStn = leftStation;
+                break;
+            }
+        }
+
+        // Setting the fist station
+        auto firstStation = std::find_if(stations.begin(), stations.end(), [&](Workstation* station){
+            return station->getItemName() == fStn;
         });
         m_firstStation = *firstStation;
+
         // Setting the count of customer orders that are still pending
         m_cntCustomer = g_pending.size();
     }
