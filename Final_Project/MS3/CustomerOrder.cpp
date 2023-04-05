@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 30 March 2023
+// Date of completion: 05 April 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -111,7 +111,7 @@ namespace sdds {
     void CustomerOrder::fillItem(Station& station, std::ostream& os) {
         bool filled { false };
         for (size_t i = 0; i < m_cntItem && !filled; i++) {
-            if ((m_lstItem[i]->m_itemName == station.getItemName()) && (station.getQuantity() > 0)) {
+            if ((m_lstItem[i]->m_itemName == station.getItemName()) && !m_lstItem[i]->m_isFilled && (station.getQuantity() > 0)) {
                 // Subtracting one from the inventory
                 station.updateQuantity();
                 m_lstItem[i]->m_serialNumber++;

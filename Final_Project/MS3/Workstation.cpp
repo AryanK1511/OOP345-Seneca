@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 30 March 2023
+// Date of completion: 05 April 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -30,32 +30,27 @@ namespace sdds {
 
     // Attempts to move the order at the front of the queue to the next station
     bool Workstation::attemptToMoveOrder() {
-        bool orderMoved { false };
-        // Check if the item has been filled in the order and the orders deque is not empty
-        if ((!(m_orders.empty())) && (m_orders.front().isItemFilled(getItemName()))) {
-            // Check whether there is a next station to move the order to
-            if (m_pNextStation) {
-                // Move the order to the next station
-                *m_pNextStation += std::move(m_orders.front());
-                m_orders.pop_front();
-                orderMoved = true;
-            }
-            // If there is no stations left, check whether the order has been completed or not
-            else {
-                // If order is completed, move the order to the completed orders deque
-                if (m_orders.front().isOrderFilled()) {
-                    g_completed.push_back(std::move(m_orders.front()));
+        bool moved{};
+        // Checking if the orders exist
+        if (!m_orders.empty()) {
+            // Checking if the order is filled
+            if (getQuantity() == 0 || m_orders.front().isItemFilled(getItemName())) {
+                if (!m_pNextStation) {
+                    if (m_orders.front().isOrderFilled()) {
+                        g_completed.push_back(std::move(m_orders.front()));
+                    } else {
+                        g_incomplete.push_back(std::move(m_orders.front()));
+                    }
                 }
-                // If the order is not completed, move the order to the incomplete orders deque
+                // Move to next station
                 else {
-                    g_incomplete.push_back((std::move(m_orders.front())));
+                    *m_pNextStation += std::move(m_orders.front());
                 }
                 m_orders.pop_front();
-                orderMoved = true;
+                moved = true;
             }
         }
-
-        return orderMoved;
+        return moved;
     }
 
     // Stores the address of the referenced Workstation object in the pointer to the m_pNextStation

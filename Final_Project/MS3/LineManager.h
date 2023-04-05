@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 30 March 2023
+// Date of completion: 05 April 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -27,9 +27,9 @@ namespace sdds {
         // Reorders the workstations present in the instance variable
         void reorderStations();
         // Performs one iteration of operations on all the workstations in the current assembly line
-        bool run(std::ostream& os);
+        bool run(std::ostream& os = std::cout);
         // Displays all active stations on the assembly line in their current order
-        void display(std::ostream& os) const;
+        void display(std::ostream& os = std::cout) const;
     };
 }
 
