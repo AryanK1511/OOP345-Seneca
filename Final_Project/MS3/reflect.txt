@@ -5,3 +5,124 @@
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
+
+========== DEVELOPMENT PROCESS ==========
+Through this project we basically implement and revise all of the concepts that we have learnt up until now as a part of the OOP345 Course. Here, we create an assembly line and simulate that. So basically, we receive a customer order which has multiple items in the order.
+Every item is modelled as a struct.
+// Item Definition
+struct Item {
+    std::string m_itemName;
+    size_t m_serialNumber{0};
+    bool m_isFilled{false};
+    Item(const std::string& src) : m_itemName(src) {};
+};
+
+Now there are multiple items in an order but we don’t know how many orders every customer might have. Therefore, we use a dynamic array of Item pointers in our CustomerOrder class to keep track of the items in the order.
+class CustomerOrder {
+private:
+    std::string m_name {};
+    std::string m_product {};
+    size_t m_cntItem { 0 };
+    Item** m_lstItem { nullptr };
+    static size_t m_widthField;
+}
+
+As we read all of our customers, items and stations data from text files. We found ourselves in the need of having a class that handles all of the extraction processes and tasks. That is why we created the Utilities module to help us with extraction from files.
+class Utilities {
+private:
+    size_t m_widthField { 1 };
+    inline static char m_delimiter {};
+public:
+    Utilities() = default;
+    // Sets the field width of the current object to the value of parameter
+    void setFieldWidth(size_t newWidth);
+    // Returns the field width of the current object
+    size_t getFieldWidth() const;
+    // Extracts a token from string str referred to by the first parameter.
+    std::string extractToken(const std::string& str, size_t& next_pos, bool& more);
+    // Strips white space characters from a string
+    std::string strip(const std::string& str);
+    // Sets the delimiter for this class to the character received
+    static void setDelimiter(char newDelimiter);
+    // Returns the delimiter for this class.
+    static char getDelimiter();
+};
+
+Up until this point, we know that we have orders that have items in them. Furthermore, every item has a particular station that is assigned to it. So, this means that every station has a lot of items of the same type, and it fills the items in the order according to the requirement. For example, if John need 3 beds. We will go to the bed station and put 3 beds in John's order if we have that much of stock. Our Station class contains all the information about a station. So basically, it is a holder for a lot of items of the same type. In our case, we just use the item name instead of an actual item object to keep track of the type of item the station has.
+class Station {
+private:
+    size_t m_id {};
+    std::string m_item {};
+    std::string m_description {};
+    size_t m_serial {};
+    size_t m_quantity { 0 };
+    inline static size_t m_widthField { 0 };
+    inline static size_t id_generator { 0 };
+}
+
+Now, think of this scenario, a customer has an order that consists of a table, a chair, and a bed. So we will have to go to the station with the table first and fill in the table. This means that there is only one active station at a time. This active station is known as a workstation in our project.
+class Workstation : public Station {
+    private:
+        std::deque<CustomerOrder> m_orders {};
+        Workstation* m_pNextStation { nullptr };
+}
+So, a Workstation is a station that is in use. Inside of this, we keep track of the orders that are on the workstation and need to be filled in a deque. we also keep track of the next station so that we can move to the next station after we are done with the current one.
+
+In our program, we also have 3 global deques that keep track of the orders that are not on the workstation. These deques are accessible outside their translation units.
+// Holds the orders to be placed onto the assembly line at the first station.
+extern std::deque<CustomerOrder> g_pending;
+// Holds the orders that have been removed from the last station and have been completely filled.
+extern std::deque<CustomerOrder> g_completed;
+// Holds the orders that have been removed from the last station and could not be filled completely.
+extern std::deque<CustomerOrder> g_incomplete;
+
+A Challenge that we usually face in this workshop is this:
+We are given with the following .txt file for the assembly line.
+Nighttable|Desk
+Dresser|Armchair
+Filing Cabinet|Bookcase
+Bookcase
+Bed|Dresser
+Office Chair|Filing Cabinet
+Armchair|Nighttable
+Desk|Office Chair
+
+The one on the right is the next station for the one on the left. Here the first station would be bed as it is not the next station for any of the other stations. In order to sort the stations in an order, I needed to know what the first station was. To accomplish this task, I created two vectors. The leftStations vector has all the stations on the left of the pipe character and the rightStations vector has all the stations on the right of the pipe character. In my logic, I made sure that we only add right and left stations if both of them exist. In our logic, we just check that the string that doesn’t appear in the rightStation vector but exists in the leftVector is the first station.
+
+std::vector<std::string> leftStations;
+std::vector<std::string> rightStations;
+
+// Algorithm to determine the first station
+size_t count {};
+std::string fStn {};
+for (const auto & leftStation : leftStations) {
+    count = 0;
+    for (const auto & rightStation : rightStations) {
+        if (leftStation == rightStation) {
+            count++;
+        }
+    }
+    if (count == 0) {
+        fStn = leftStation;
+        break;
+    }
+}
+
+// Setting the fist station
+auto firstStation = std::find_if(stations.begin(), stations.end(), [&](Workstation* station){
+    return station->getItemName() == fStn;
+});
+m_firstStation = *firstStation;
+
+
+Due to all of the specifications provided above. We ended up creating the following modules:
+1. Utilities Module
+2. Station Module
+3. CustomerOrder Module
+4. Workstation Module
+5. LineManager Module
+
+Lets go back to our example. So the line manager moves the order from the table to chair to the bed station to fill the order. Any station that has used all the items in stock cannot fill any more orders. At the end of the line orders are either completed or incomplete due to a lack of inventory at one or more stations. The simulator lists the completed orders and those that are incomplete once the line manager has finished processing all orders.
+
+========== COURSE FEEBACK ==========
+Firstly, I would like to thank you Hong for being such an amazing professor and an easy person to talk to. You have been really friendly and supportive throughout the course and have helped me develop better practices and techniques as far as C++ is concerned. I really enjoyed our talks about experiences and programming in general and will really miss that homely and friendly atmosphere in classes. If I talk about the course, I think that there is a lot to learn for every week and the reading material can get overwhelming at times given that there is a lot of course load due to other courses as well. Apart from that aspect, I believe that the course is well organized, and the workshops are beautifully designed so that you understand every aspect of the material. I definitely feel that I have levelled up in my C++ skills and it’s only going to get better from here!!!
