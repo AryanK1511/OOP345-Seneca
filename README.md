@@ -11,8 +11,11 @@ Query function without const (display, size, operator[]). For the reasons to why
 - WS04 : 9.5 / 10 <br />
 Copy assignment operator doesn't have a clause to validate the source object's resources before allocating memory in the case it's nullptr / set the current object's resource to nullptr if required.
 - WS05 : 9.25 / 10
-For the alternatives to the book/move duplication go into more depth of how it would be generally arranged/done. For example with the base class route, what would go in there and what was be in book/movie?
-Particular to this workshop the presence of the default constructor is necessary as there are objects make of movie/book that are default constructed. Where are these instances?
+For the alternatives to the book/move duplication go into more depth of how it would be generally arranged/done. For example with the base class route, what would go in there and what was be in book/movie? Particular to this workshop the presence of the default constructor is necessary as there are objects make of movie/book that are default constructed. Where are these instances?
+- WS06 : 8 / 10
+m_dept is a public data member in Employee that supplies the value of m_department to Professor but there shouldn't be a notion of this in Employee and Professor should deal with the reading of that data from the file in its constructor. As the trim functionality is used multiple times and that there's a utils module it should be placed there to avoid and included to avoid repetition of code
+- WS07 : 9.5 / 10
+What is the reason as to why std::list can't be used with std::sort but rather use a member function?
 
 # Disclaimer
 Please don't just copy the code mindlessly without trying to solve the problems yourself, it's totally pointless if you actually wanna learn how to write software and a blatant violation of the [Academic Integrity](https://www.senecacollege.ca/about/policies/academic-integrity-policy.html) policy of the course.
