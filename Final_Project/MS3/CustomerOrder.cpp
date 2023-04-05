@@ -114,7 +114,7 @@ namespace sdds {
             if ((m_lstItem[i]->m_itemName == station.getItemName()) && !m_lstItem[i]->m_isFilled && (station.getQuantity() > 0)) {
                 // Subtracting one from the inventory
                 station.updateQuantity();
-                m_lstItem[i]->m_serialNumber++;
+                m_lstItem[i]->m_serialNumber = station.getNextSerialNumber();
                 m_lstItem[i]->m_isFilled = true;
                 filled = true;
                 os << "    Filled " << m_name << ", " << m_product << " [" << m_lstItem[i]->m_itemName << "]" << endl;
@@ -128,7 +128,7 @@ namespace sdds {
     void CustomerOrder::display(std::ostream& os) const {
         os << m_name << " - " << m_product << endl;
         for (size_t i = 0; i < m_cntItem; i++) {
-            os << "[" << std::setfill('0') << std::setw(6) << m_lstItem[i]->m_serialNumber << "] ";
+            os << "[" << std::right << std::setfill('0') << std::setw(6) << m_lstItem[i]->m_serialNumber << "] ";
             os << std::left << std::setfill(' ') << std::setw(m_widthField) << m_lstItem[i]->m_itemName << "   - " << (m_lstItem[i]->m_isFilled ? "FILLED" : "TO BE FILLED");
             os << std::endl;
         }

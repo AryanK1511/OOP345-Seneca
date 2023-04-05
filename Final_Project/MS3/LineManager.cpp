@@ -89,12 +89,17 @@ namespace sdds {
             g_pending.pop_front();
         }
 
-        for (auto & i : m_activeLine) {
-            i->fill(os);
-        }
-        for (auto & i : m_activeLine) {
-            i->attemptToMoveOrder();
-        }
+        // Apply the fill() member function on each element of m_activeLine
+        std::for_each(m_activeLine.begin(), m_activeLine.end(),
+          [&](auto& i) {
+              i->fill(os);
+          });
+
+        // Apply the attemptToMoveOrder() member function on each element of m_activeLine
+        std::for_each(m_activeLine.begin(), m_activeLine.end(),
+          [&](auto& i) {
+              i->attemptToMoveOrder();
+          });
 
         // Check if all customer orders have been filled or cannot be filled
         return g_completed.size() + g_incomplete.size() == m_cntCustomer;
