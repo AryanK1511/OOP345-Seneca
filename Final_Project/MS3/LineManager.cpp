@@ -1,7 +1,7 @@
 // Name: Aryan Khurana
 // Seneca Student ID: 145282216
 // Seneca email: akhurana22@myseneca.ca
-// Date of completion: 05 April 2023
+// Date of completion: 06 April 2023
 //
 // I confirm that I am the only author of this file
 //   and the content was created entirely by me.
@@ -96,14 +96,8 @@ namespace sdds {
             i->attemptToMoveOrder();
         }
 
-//        for (size_t i = 0; i < m_activeLine.size(); i++)
-//            m_activeLine[i]->attemptToMoveOrder();
-
-
         // Check if all customer orders have been filled or cannot be filled
-        std::cout << g_completed.size() << g_incomplete.size() << m_cntCustomer << std::endl;
         return g_completed.size() + g_incomplete.size() == m_cntCustomer;
-//        return true;
     }
 
     // Displays all active stations on the assembly line in their current order
