@@ -16,6 +16,8 @@ For the alternatives to the book/move duplication go into more depth of how it w
 m_dept is a public data member in Employee that supplies the value of m_department to Professor but there shouldn't be a notion of this in Employee and Professor should deal with the reading of that data from the file in its constructor. As the trim functionality is used multiple times and that there's a utils module it should be placed there to avoid and included to avoid repetition of code
 - WS07 : 9.5 / 10
 What is the reason as to why std::list can't be used with std::sort but rather use a member function?
+- WS08 : 9.25 / 10
+Reflection -7.5% reduction. Regarding the use of unique_ptr vs shared in the case of the workshop's singleton design, what other reasons are there that won't allow unique_ptr to be used here? Could it be make to be usable?
 
 # Disclaimer
 Please don't just copy the code mindlessly without trying to solve the problems yourself, it's totally pointless if you actually wanna learn how to write software and a blatant violation of the [Academic Integrity](https://www.senecacollege.ca/about/policies/academic-integrity-policy.html) policy of the course.
