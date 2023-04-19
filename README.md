@@ -18,6 +18,15 @@ m_dept is a public data member in Employee that supplies the value of m_departme
 What is the reason as to why std::list can't be used with std::sort but rather use a member function?
 - WS08 : 9.25 / 10
 Reflection -7.5% reduction. Regarding the use of unique_ptr vs shared in the case of the workshop's singleton design, what other reasons are there that won't allow unique_ptr to be used here? Could it be make to be usable?
+- Final Project : 86 / 100
+  - MS1
+    - Station constr should validate the param coming in before the extratction process (eg if it's empty)
+    - There isn't the use of the more parameter from extractToken to validate whether this is more to read or not
+  - MS2
+    - CustOrder constr should validate its param
+  - MS3
+    - There are other situations where exceptions could/should be considered (eg if there are mulitple of the same station or multiple first stations).
+    - A couple of range based for loops are used in the LM constr. Specs mention only one manual loop is permitted for reading the file.
 
 # Disclaimer
 Please don't just copy the code mindlessly without trying to solve the problems yourself, it's totally pointless if you actually wanna learn how to write software and a blatant violation of the [Academic Integrity](https://www.senecacollege.ca/about/policies/academic-integrity-policy.html) policy of the course.
